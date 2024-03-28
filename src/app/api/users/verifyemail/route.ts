@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     console.log(token);
     const user = await User.findOne({
       verifyToken: token,
-      verifyTokenExpire: { $gt: Date.now() },
+      verifyTokenExpiry: { $gt: Date.now() },
     });
 
     if (!user) {
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
     user.isVerified = true;
     user.verifyToken = undefined;
-    user.verifyTokenExpire = undefined;
+    user.verifyTokenExpiry = undefined;
     await user.save();
 
     return NextResponse.json({ message: "Email Verified" }, { status: 200 });
